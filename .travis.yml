@@ -14,4 +14,4 @@ branches:
 	only:
 		- master
 script:
-	-./gradlew clean build -PdisablePreDex
+	- ./gradlew clean build -PdisablePreDex
