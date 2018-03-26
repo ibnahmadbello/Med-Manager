@@ -1,4 +1,6 @@
 language: android
+sudo: required
+jdk: oraclejdk7
 android:
 	components:
 		- platform-tools
@@ -6,7 +8,7 @@ android:
 		- android-25
 		- extra-android-m2repository
 script:
-	- ./gradlew build
+	- ./gradlew clean build
 before_install:
 	- chmod +x gradlew
 branches:
