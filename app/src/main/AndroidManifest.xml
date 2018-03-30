@@ -19,8 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" android:label="@string/login_page"/>
-        <activity android:name=".WelcomeActivity" />
-        <activity android:name=".AddMedicationActivity"></activity>
+        <activity android:name=".WelcomeActivity" android:label="@string/welcome"/>
+        <activity android:name=".AddMedicationActivity" android:label="@string/add_medication"></activity>
     </application>
 
 </manifest>
