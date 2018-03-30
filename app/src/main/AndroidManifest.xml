@@ -18,8 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".WelcomeActivity"></activity>
+        <activity android:name=".LoginActivity" android:label="@string/login_page"/>
+        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".AddMedicationActivity"></activity>
     </application>
 
 </manifest>
