@@ -3,4 +3,11 @@
     <string name="login_page">Login Page</string>
     <string name="welcome">Welcome</string>
     <string name="add_medication">Add Medication</string>
+    <string name="add">Add</string>
+    <string name="new_medication">New Medication</string>
+    <string name="name_of_medicine">Name of Medicine:</string>
+    <string name="description">Description:</string>
+    <string name="frequency">Frequency/Interval:</string>
+    <string name="start_date">Start Date:</string>
+    <string name="end_date">End Date:</string>
 </resources>
