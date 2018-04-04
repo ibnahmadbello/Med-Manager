@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:scaleType="center"
-        android:src="@drawable/placeholder" />
+        android:src="@drawable/placeholder"
+        android:contentDescription="@string/profile_picture"/>
 
     <!--<LinearLayout-->
         <!--android:id="@+id/linear_layout"-->
