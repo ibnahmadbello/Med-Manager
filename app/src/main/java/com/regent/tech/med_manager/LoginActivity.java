@@ -16,10 +16,16 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         layout = (RelativeLayout) findViewById(R.id.login_layout);
+        setupSnackbar();
+
+    }
+
+
+    public void setupSnackbar(){
         Snackbar.make(layout, "Health is Wealth", Snackbar.LENGTH_INDEFINITE)
                 .setAction("Sign In", null)
                 .setActionTextColor(Color.GREEN)
                 .show();
-
     }
+
 }
