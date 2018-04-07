@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static final String TAG = LoginActivity.class.getSimpleName();
     RelativeLayout layout;
 
     @Override
