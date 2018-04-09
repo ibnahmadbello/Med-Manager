@@ -11,4 +11,5 @@
     <string name="start_date">Start Date:</string>
     <string name="end_date">End Date:</string>
     <string name="profile_picture">Profile Picture Display</string>
+    <string name="loading">Loading</string>
 </resources>
