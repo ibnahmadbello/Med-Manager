@@ -30,4 +30,3 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:11.8.0'
     testImplementation 'junit:junit:4.12'
 }
-apply plugin: 'com.google.gms.google-services'

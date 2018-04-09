@@ -10,4 +10,9 @@
         android:title="@string/sign_out"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/disconnect"
+        android:title="@string/disconnect"
+        app:showAsAction="never"/>
+
 </menu>

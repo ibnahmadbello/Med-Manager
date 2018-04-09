@@ -13,4 +13,10 @@
     <string name="profile_picture">Profile Picture Display</string>
     <string name="loading">Loading</string>
     <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+
+    <!-- TODO(user): replace with your real server client ID -->
+    <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
+         from https://console.developers.google.com/ -->
+    <string name="server_client_id">948863978074-84o50os5kqhfln5l0oqgfbt1a4ot8bv4.apps.googleusercontent.com</string>
 </resources>
