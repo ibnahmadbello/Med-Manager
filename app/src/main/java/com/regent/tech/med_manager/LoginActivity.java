@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     // [END signIn]
 
     // [START signOut]
-    private void signOut() {
+    public void signOut() {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     // [START revokeAccess]
-    private void revokeAccess() {
+    public void revokeAccess() {
         mGoogleSignInClient.revokeAccess()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
@@ -152,32 +152,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 signIn();
                 break;
         }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        // Inflate the menu options from the res/menu/menu_login.xml file.
-        // This adds menu items to the app bar.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
-        switch (item.getItemId()) {
-            // Respond to a click on the "Sign out" menu option
-            case R.id.sign_out:
-                signOut();
-                return true;
-            case R.id.disconnect:
-                revokeAccess();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 }
