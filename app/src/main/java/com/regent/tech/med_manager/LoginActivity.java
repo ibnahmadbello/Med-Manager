@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken("1054952682027-11fraa65ll0917cro1kg56rrosomlg4s.apps.googleusercontent.com")
+                .requestIdToken("1054952682027-11fraa65ll0917cro1kg56rrosomlg4s.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         // [END configure_signin]
@@ -116,12 +116,12 @@ public class LoginActivity extends AppCompatActivity implements
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 // Google Sign In was successful, authenticate with firebase
                 GoogleSignInAccount account = result.getSignInAccount();
-                Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+//                Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
 //                intent.putExtra("name", account.getDisplayName());
 //                intent.putExtra("picture", account.getPhotoUrl());
 //                intent.putExtra("email", account.getEmail());
-                startActivity(intent);
-//                firebaseAuthWithGoogle(account);
+//                startActivity(intent);
+                firebaseAuthWithGoogle(account);
             } else {
                 // Google Sign In was not successful
 //                updateUI(null);
@@ -131,32 +131,37 @@ public class LoginActivity extends AppCompatActivity implements
     }
     // [END onActivityResult]
 
-//    private void firebaseAuthWithGoogle(GoogleSignInAccount acct){
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct){
 //        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
 //        mProgressBar.setVisibility(View.VISIBLE);
-//
-//        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-//        mAuth.signInWithCredential(credential)
-//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()){
-//                            // Sign In success, update UI with the signed-in user's information
-//                            Log.d(TAG, "signInWithCredential:success");
-//                            FirebaseUser user = mAuth.getCurrentUser();
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            // Sign In success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(LoginActivity.this, WelcomeActivity.class);
+                            intent.putExtra("name", user.getDisplayName());
+                            intent.putExtra("email", user.getEmail());
+                            intent.putExtra("picture", user.getPhotoUrl());
+                            startActivity(intent);
 //                            updateUI(user);
-//                        } else {
-//                            // If sign in fails, display a message to the user
-//                            Log.w(TAG, "singInWithCredential:failure", task.getException());
-//                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-//                                    .show();
+                        } else {
+                            // If sign in fails, display a message to the user
+                            Log.w(TAG, "singInWithCredential:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
+                                    .show();
 //                            updateUI(null);
-//                        }
-//
-//                        mProgressBar.setVisibility(View.GONE);
-//                    }
-//                });
-//    }
+                        }
+
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+                });
+    }
 
 //    // [START handleSignInResult]
 //    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
