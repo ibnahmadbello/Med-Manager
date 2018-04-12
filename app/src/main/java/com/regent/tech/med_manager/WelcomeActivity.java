@@ -4,15 +4,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 public class WelcomeActivity extends AppCompatActivity {
 
     LoginActivity loginActivity;
+    private Button mButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        mButton = (Button) findViewById(R.id.test_sign_out);
     }
 
     @Override
@@ -34,7 +37,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 loginActivity.signOut();
                 return true;
             case R.id.disconnect:
-                loginActivity.revokeAccess();
+//                loginActivity.revokeAccess();
                 return true;
         }
         return super.onOptionsItemSelected(item);
