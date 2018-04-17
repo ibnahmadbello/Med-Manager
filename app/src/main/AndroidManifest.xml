@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.regent.tech.med_manager">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,11 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" android:label="@string/login_page"/>
-        <activity android:name=".WelcomeActivity" android:label="@string/welcome"
-            android:parentActivityName=".LoginActivity"/>
-        <activity android:name=".AddMedicationActivity" android:label="@string/add_medication"
-            android:parentActivityName=".WelcomeActivity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/login_page" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:label="@string/welcome"/>
+        <activity
+            android:name=".AddMedicationActivity"
+            android:label="@string/add_medication"
+            android:parentActivityName=".WelcomeActivity" />
     </application>
 
 </manifest>
