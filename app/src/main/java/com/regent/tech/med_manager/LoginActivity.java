@@ -1,13 +1,14 @@
 package com.regent.tech.med_manager;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -18,14 +19,9 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-/**
- * Activity to demonstrate basic retrieval of the Google user's ID, email address, and basic
- * profile.
- */
-public class LoginActivity extends AppCompatActivity implements
-        View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private static final String TAG = "SignInActivity";
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -35,14 +31,13 @@ public class LoginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        // Button listeners
         findViewById(R.id.btn_sign_in).setOnClickListener(this);
 
         // [START configure_signin]
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         // [END configure_signin]
@@ -58,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements
         signInButton.setSize(SignInButton.SIZE_STANDARD);
         signInButton.setColorScheme(SignInButton.COLOR_LIGHT);
         // [END customize_button]
+
     }
 
     @Override
@@ -68,12 +64,7 @@ public class LoginActivity extends AppCompatActivity implements
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        intent.putExtra("name", account.getDisplayName());
-        intent.putExtra("email", account.getEmail());
-        intent.putExtra("picture", account.getPhotoUrl());
-        startActivity(intent);
-        finish();
+        updateUI(account);
         // [END on_start_sign_in]
     }
 
@@ -98,16 +89,12 @@ public class LoginActivity extends AppCompatActivity implements
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-            Intent intent = new Intent(this, WelcomeActivity.class);
-            intent.putExtra("name", account.getDisplayName());
-            intent.putExtra("email", account.getEmail());
-            intent.putExtra("picture", account.getPhotoUrl());
-            startActivity(intent);
-            finish();
+            updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w(TAG, String.format("signInResult:failed code=" + e.getStatusCode(), LoginActivity.class));
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
+            updateUI(null);
         }
     }
     // [END handleSignInResult]
@@ -120,19 +107,25 @@ public class LoginActivity extends AppCompatActivity implements
     // [END signIn]
 
     // [START signOut]
-    public void signOut() {
+    private void signOut() {
         mGoogleSignInClient.signOut()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
-                        Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-                        startActivity(intent);
+                        updateUI(null);
                         // [END_EXCLUDE]
                     }
                 });
     }
     // [END signOut]
+
+    private void updateUI(@Nullable GoogleSignInAccount account) {
+        if (account != null) {
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            startActivity(intent);
+        }
+    }
 
     // [START revokeAccess]
     private void revokeAccess() {
@@ -141,19 +134,50 @@ public class LoginActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
-//                        updateUI(null);
+                        updateUI(null);
                         // [END_EXCLUDE]
                     }
                 });
     }
     // [END revokeAccess]
 
+
+
+
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void onClick(View view){
+        int id = view.getId();
+        switch (id){
             case R.id.btn_sign_in:
                 signIn();
                 break;
         }
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        // Inflate the menu options from the res/menu/menu_login.xml file.
+        // This adds menu items to the app bar.
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        return true;
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // User clicked on a menu option in the app bar overflow menu
+        switch (item.getItemId()) {
+            // Respond to a click on the "Sign out" menu option
+            case R.id.sign_out:
+                signOut();
+                return true;
+            case R.id.disconnect:
+                revokeAccess();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
