@@ -60,21 +60,22 @@ public class LoginActivity extends AppCompatActivity implements
         // [END customize_button]
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//        // [START on_start_sign_in]
-//        // Check for existing Google Sign In account, if the user is already signed in
-//        // the GoogleSignInAccount will be non-null.
-//        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//        Intent intent = new Intent(this, WelcomeActivity.class);
-//        intent.putExtra("name", account.getDisplayName());
-//        intent.putExtra("email", account.getEmail());
-//        intent.putExtra("picture", account.getPhotoUrl());
-//        startActivity(intent);
-//        // [END on_start_sign_in]
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // [START on_start_sign_in]
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        intent.putExtra("name", account.getDisplayName());
+        intent.putExtra("email", account.getEmail());
+        intent.putExtra("picture", account.getPhotoUrl());
+        startActivity(intent);
+        finish();
+        // [END on_start_sign_in]
+    }
 
     // [START onActivityResult]
     @Override
@@ -102,6 +103,7 @@ public class LoginActivity extends AppCompatActivity implements
             intent.putExtra("email", account.getEmail());
             intent.putExtra("picture", account.getPhotoUrl());
             startActivity(intent);
+            finish();
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -124,7 +126,8 @@ public class LoginActivity extends AppCompatActivity implements
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         // [START_EXCLUDE]
-//                        updateUI(null);
+                        Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
+                        startActivity(intent);
                         // [END_EXCLUDE]
                     }
                 });
@@ -151,12 +154,6 @@ public class LoginActivity extends AppCompatActivity implements
             case R.id.btn_sign_in:
                 signIn();
                 break;
-//            case R.id.sign_out_button:
-//                signOut();
-//                break;
-//            case R.id.disconnect_button:
-//                revokeAccess();
-//                break;
         }
     }
 }
