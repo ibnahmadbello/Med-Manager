@@ -1,7 +1,9 @@
 package com.regent.tech.med_manager;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -16,9 +20,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class WelcomeActivity extends AppCompatActivity{
+public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     private GoogleSignInClient mGoogleSignInClient;
+    private TextView nameTextView;
+    private TextView emailTextView;
+    private ImageView profilePicture;
+    private FloatingActionButton floatingActionButton;
 
 
     @Override
@@ -26,10 +34,33 @@ public class WelcomeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
+        floatingActionButton = findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(this);
+        nameTextView = findViewById(R.id.profile_name);
+        emailTextView = findViewById(R.id.profile_email);
+        profilePicture = findViewById(R.id.profile_picture);
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        setupProfile();
+
+
+    }
+
+    public void addMedication(){
+        Intent intent = new Intent(this, AddMedicationActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void setupProfile(){
+        Intent loginActivityIntent = getIntent();
+        String name = loginActivityIntent.getStringExtra(Intent.EXTRA_TEXT);
+//        String email = loginActivityIntent.getStringExtra();
+
+        nameTextView.setText(name);
     }
 
     // [START signOut]
@@ -56,7 +87,6 @@ public class WelcomeActivity extends AppCompatActivity{
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // User clicked on a menu option in the app bar overflow menu
@@ -72,4 +102,12 @@ public class WelcomeActivity extends AppCompatActivity{
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.fab:
+                addMedication();
+                break;
+        }
+    }
 }

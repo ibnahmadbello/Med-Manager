@@ -68,10 +68,13 @@ public class LoginActivity extends AppCompatActivity implements
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+//        Log.e(TAG, "display name: " + account.getDisplayName());
+//        String personName = account.getDisplayName();
+//        String personEmail = account.getEmail();
+//        String personPicture = account.getPhotoUrl().toString();
+//        Log.e(TAG, "Name: " + personName + ", email: " + personEmail + ", Image: " + personPicture);
         Intent intent = new Intent(this, WelcomeActivity.class);
-        intent.putExtra("name", account.getDisplayName());
-        intent.putExtra("email", account.getEmail());
-        intent.putExtra("picture", account.getPhotoUrl());
+        intent.putExtra(Intent.EXTRA_TEXT, account);
         startActivity(intent);
         finish();
         // [END on_start_sign_in]
