@@ -1,12 +1,17 @@
 package com.regent.tech.med_manager;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.regent.tech.med_manager.Data.MedicineContract;
+import com.regent.tech.med_manager.Data.MedicineHelperClass;
 import com.regent.tech.med_manager.Utils.DatePicker;
 
 import java.text.DateFormat;
@@ -56,6 +61,32 @@ public class AddMedicationActivity extends AppCompatActivity implements
         int medicineInterval = Integer.parseInt(medInterval);
         String startDate = startDateInput.getText().toString().trim();
         String endDate = endDateInput.getText().toString().trim();
+
+        // Create database helper
+        MedicineHelperClass medicineHelperClass = new MedicineHelperClass(this);
+
+        // Get the database in writing mode
+        SQLiteDatabase database = medicineHelperClass.getWritableDatabase();
+
+        // Create a ContentValues object where column names are the keys,
+        // and medicine attributes from the editor are the values.
+        ContentValues values = new ContentValues();
+        values.put(MedicineContract.MedicineEntry.COLUMN_MEDICINE_NAME, medicineName);
+        values.put(MedicineContract.MedicineEntry.COLUMN_MEDICINE_DECRIPTION, medicineDescription);
+        values.put(MedicineContract.MedicineEntry.COLUMN_MEDICINE_INTERVAL, medicineInterval);
+        values.put(MedicineContract.MedicineEntry.COLUMN_MEDICINE_START_DATE, startDate);
+        values.put(MedicineContract.MedicineEntry.COLUMN_MEDICINE_END_DATE, endDate);
+
+        // Insert a new row
+        long newRowId = database.insert(MedicineContract.MedicineEntry.TABLE_NAME, null,
+                values);
+        if (newRowId == -1){
+            // If the row ID is -1, then there was an error with insertion.
+            Toast.makeText(this, "Error with saving pet", Toast.LENGTH_SHORT).show();
+        } else {
+            // Successfully inserted row
+            Toast.makeText(this, "Medication added successfully", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
