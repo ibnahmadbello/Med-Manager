@@ -23,6 +23,7 @@ public class AddMedicationActivity extends AppCompatActivity implements
     EditText intervalInput;
     Button startDateInput;
     Button endDateInput;
+    Button saveMedicine;
 
 
     @Override
@@ -35,15 +36,26 @@ public class AddMedicationActivity extends AppCompatActivity implements
         intervalInput = findViewById(R.id.input_frequency);
         startDateInput = findViewById(R.id.input_start_date);
         endDateInput = findViewById(R.id.input_end_date);
+        saveMedicine = findViewById(R.id.add);
 
         startDateInput.setOnClickListener(this);
         endDateInput.setOnClickListener(this);
+        saveMedicine.setOnClickListener(this);
 
     }
 
     public void setDate(){
         DatePicker datePicker = new DatePicker();
         datePicker.show(getFragmentManager(), TAG);
+    }
+
+    public void insertMedicine(){
+        String medicineName = nameInput.getText().toString().trim();
+        String medicineDescription = descriptionInput.getText().toString().trim();
+        String medInterval = intervalInput.getText().toString().trim();
+        int medicineInterval = Integer.parseInt(medInterval);
+        String startDate = startDateInput.getText().toString().trim();
+        String endDate = endDateInput.getText().toString().trim();
     }
 
     @Override
@@ -54,6 +66,9 @@ public class AddMedicationActivity extends AppCompatActivity implements
                 break;
             case R.id.input_end_date:
                 setDate();
+                break;
+            case R.id.add:
+                insertMedicine();
                 break;
         }
 

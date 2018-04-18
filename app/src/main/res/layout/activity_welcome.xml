@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context="com.regent.tech.med_manager.WelcomeActivity">
 
+    <SearchView
+        android:id="@+id/search_view"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        android:queryHint="@string/search_medication"/>
+
     <TextView
         android:id="@+id/profile_name"
         android:layout_width="wrap_content"
